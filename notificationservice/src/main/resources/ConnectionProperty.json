@@ -1,0 +1,34 @@
+{
+  "psqldb-sql": {
+    "dev": {
+      "username": "postgres",
+      "password": "abc123",
+      "engine": "postgres",
+      "host": "localhost",
+      "port": "5432",
+      "url": "jdbc:postgresql://localhost:5432/{DATABASE_NAME}?currentSchema=public"
+    }
+  },
+  "rabbitmq-scm": {
+    "dev": {
+      "username": "user",
+      "password": "RclDev@321",
+      "host": "100.67.216.41",
+      "port": "5672"
+    }
+  },
+  "rediscache": {
+    "dev": {
+      "host": "100.67.216.41",
+      "port": "6379",
+      "tls": false
+    }
+  },
+  "mongodb-nosql": {
+    "dev": {
+      "username": "root",
+      "password": "RclDev@321",
+      "url": "mongodb://100.67.216.41:27017/test?retryWrites=true&w=majority"
+    }
+  }
+}
