@@ -1,11 +1,11 @@
-# LendWise Nepal
+# LendWise - Bridging the Credit Gap
 **AI-Driven Micro-Lending Platform for Unbanked Merchants**
 
 ---
 
 ## Project Overview
 
-**LendWise Nepal** is a microservices-based, AI-enabled digital lending platform designed to support unbanked and underbanked merchants in Nepal.  
+**LendWise** is a microservices-based, AI-enabled digital lending platform designed to support unbanked and underbanked merchants in Nepal.  
 The system leverages **alternative digital transaction data** (QR payments, wallet transactions, and utility payments) to assess creditworthiness and provide instant micro-loans without traditional collateral.
 
 The platform is built using **modern distributed system principles**, integrating secure identity management, transaction analytics, AI-based credit scoring, and automated loan lifecycle management.
@@ -139,7 +139,7 @@ The generated credit score is used by the **Loan Service** to determine loan eli
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer            | Technology |
 |------------------|------------|
