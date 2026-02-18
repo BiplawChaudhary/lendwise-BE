@@ -1,6 +1,7 @@
 package com.lendwise.transactionservice.exceptions;
 
 import com.lendwise.transactionservice.dto.global.GlobalApiResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,17 +17,21 @@ import java.util.Map;
     @project expense-distributor
     @author biplaw.chaudhary
 */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     // Handle GenericException
     @ExceptionHandler(GenericException.class)
     public ResponseEntity<GlobalApiResponseDto> handleGenericException(GenericException ex) {
+        log.error("Exception occurred with response code {} and message {} ",ex.getCode(), ex.getMessage());
         GlobalApiResponseDto response = new GlobalApiResponseDto();
         response.setApiResponseCode(ex.getCode());
         response.setApiResponseMessage(ex.getMessage());
         response.setApiResponseTimestamp(LocalDateTime.now());
-        response.setApiResponseData(null); // no error object
+        GlobalApiResponseDto.ApiResponseData apiResponseData = new GlobalApiResponseDto.ApiResponseData();
+        apiResponseData.setData(new HashMap<>());
+        response.setApiResponseData(apiResponseData);
 
         return ResponseEntity.ok(response);
     }
@@ -34,6 +39,7 @@ public class GlobalExceptionHandler {
     // Handle GenericExceptionWithCustomData
     @ExceptionHandler(GenericExceptionWithCustomData.class)
     public ResponseEntity<GlobalApiResponseDto> handleGenericExceptionWithData(GenericExceptionWithCustomData ex) {
+        log.error("Exception occurred with response code {} and message {} and data {}",ex.getCode(), ex.getMessage(), ex.getData());
         GlobalApiResponseDto response = new GlobalApiResponseDto();
         response.setApiResponseCode(ex.getCode());
         response.setApiResponseMessage(ex.getMessage());
@@ -50,6 +56,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GlobalApiResponseDto> handleValidationException(MethodArgumentNotValidException ex) {
+        log.error("Exception occurred with: {}", ex.getMessage());
+
         Map<String, String> errorMap = new HashMap<>();
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         for (FieldError fieldError : fieldErrors) {
@@ -72,14 +80,18 @@ public class GlobalExceptionHandler {
     // Handle all other unhandled exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalApiResponseDto> handleGeneralException(Exception ex) {
+        log.error("Exception occurred with: {}", ex.getMessage());
         GlobalApiResponseDto response = new GlobalApiResponseDto();
         response.setApiResponseCode(500);
         response.setApiResponseMessage("Internal server error.");
         response.setApiResponseTimestamp(LocalDateTime.now());
-        response.setApiResponseData(null);
+        GlobalApiResponseDto.ApiResponseData apiResponseData = new GlobalApiResponseDto.ApiResponseData();
+        apiResponseData.setData(new HashMap<>());
+        response.setApiResponseData(apiResponseData);
 
         // Optional: Log exception here
 
         return ResponseEntity.ok(response);
     }
 }
+

@@ -21,7 +21,8 @@
     "dev": {
       "host": "100.67.216.41",
       "port": "6379",
-      "tls": false
+      "tls": false,
+      "password": "RclDev@321"
     }
   },
   "mongodb-nosql": {

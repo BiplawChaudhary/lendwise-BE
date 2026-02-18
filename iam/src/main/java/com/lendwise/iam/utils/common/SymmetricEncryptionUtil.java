@@ -1,5 +1,7 @@
 package com.lendwise.iam.utils.common;
 
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -20,6 +22,9 @@ import java.util.Base64;
 */
 @Component
 public class SymmetricEncryptionUtil {
+
+    @Value("${aes.random.enc.key}")
+    private String aesKey;
 
     public enum EncryptionAlgorithm {
         AES_ECB,
@@ -49,13 +54,13 @@ public class SymmetricEncryptionUtil {
      * Encrypts the plaintext using the specified algorithm and key.
      *
      * @param plaintext The text to encrypt
-     * @param key       Base64 encoded secret key
      * @param algorithm The encryption algorithm to use
      * @return Base64 encoded ciphertext
      * @throws Exception if encryption fails
      */
-    public String encrypt(String plaintext, String key, EncryptionAlgorithm algorithm) throws Exception {
-        SecretKey secretKey = new SecretKeySpec(Base64.getDecoder().decode(key), "AES");
+    public String encrypt(String plaintext,  EncryptionAlgorithm algorithm) throws Exception {
+
+        SecretKey secretKey = new SecretKeySpec(Base64.getDecoder().decode(aesKey), "AES");
         byte[] cipherText;
 
         switch (algorithm) {
@@ -79,13 +84,12 @@ public class SymmetricEncryptionUtil {
      * Decrypts the ciphertext using the specified algorithm and key.
      *
      * @param ciphertext Base64 encoded ciphertext
-     * @param key        Base64 encoded secret key
      * @param algorithm  The encryption algorithm to use
      * @return Decrypted plaintext
      * @throws Exception if decryption fails
      */
-    public String decrypt(String ciphertext, String key, EncryptionAlgorithm algorithm) throws Exception {
-        SecretKey secretKey = new SecretKeySpec(Base64.getDecoder().decode(key), "AES");
+    public String decrypt(String ciphertext, EncryptionAlgorithm algorithm) throws Exception {
+        SecretKey secretKey = new SecretKeySpec(Base64.getDecoder().decode(aesKey), "AES");
         byte[] plainText;
 
         switch (algorithm) {

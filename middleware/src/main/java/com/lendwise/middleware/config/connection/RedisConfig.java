@@ -69,6 +69,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(redisParams.get("host").toString());
         config.setPort(port);
+        config.setPassword(redisParams.get("password").toString());
         return config;
     }
 
