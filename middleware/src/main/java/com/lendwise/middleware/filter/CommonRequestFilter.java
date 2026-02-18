@@ -58,7 +58,14 @@ public class CommonRequestFilter implements Filter {
             authorizationRequestDto.setAccessedUrl(request.getRequestURI());
 
             // This might throw GenericException
-            authService.authenticateAndCheckAuthorization(urn, authorizationRequestDto);
+            Object  authResponse= authService.authenticateAndCheckAuthorization(urn, authorizationRequestDto);
+
+            if(authResponse!= null){
+                Map<String, Object> authResponseData = (Map<String, Object>) authResponse;
+                if(authResponseData.get("userId")!=null){
+                    MDC.put("userId", authResponseData.get("userId"));
+                }
+            }
 
             if (contentType != null) {
                 if (contentType.contains(MULTIPART_FORM_DATA)) {

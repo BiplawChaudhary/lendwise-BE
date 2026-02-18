@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@ConditionalOnProperty(name = "jarfusion.postgres", havingValue = "true")
+@ConditionalOnProperty(name = "lendwise.postgres", havingValue = "true")
 public class ProcedureCallUtil {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

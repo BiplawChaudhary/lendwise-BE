@@ -201,6 +201,7 @@ public class AuthService {
         // Extract user role from token
         Claims extractedClaims = jwtUtil.extractAllClaims(authToken);
         String userRole = extractedClaims.get("role", String.class);
+        Long userId = extractedClaims.get("userId", Long.class);
 
         if (userRole == null || userRole.trim().isEmpty()) {
             throw new GenericException(urn, "Role not found in token", 403);
@@ -217,7 +218,8 @@ public class AuthService {
         return Map.of(
                 "authorized", true,
                 "role", userRole,
-                "url", accessedUrl
+                "url", accessedUrl,
+                "userId", userId
         );
     }
 
@@ -237,8 +239,8 @@ public class AuthService {
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         Map<String, List<String>> roleUrlMapping = Map.of(
-                "ADMIN", List.of("/admin/**", "/merchant/**"), // Admin can access both
-                "MERCHANT", List.of("/merchant/**")
+                "ADMIN", List.of("/lendwisemw/api/v1/admin/**"), // Admin can access both
+                "MERCHANT", List.of("/lendwisemw/api/v1/merchant/**")
         );
 
         List<String> allowedPatterns = roleUrlMapping.get(role.toUpperCase());

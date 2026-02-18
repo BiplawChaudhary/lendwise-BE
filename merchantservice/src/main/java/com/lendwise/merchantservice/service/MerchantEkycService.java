@@ -37,6 +37,7 @@ public class MerchantEkycService {
         );
         log.info("PROC RESPONSE FOR SAVING PERSONAL DATA: {}", objectMapper.writeValueAsString(procCallResposne));
 
+        procedureCallUtil.verifyProcedureResponse(urn, procCallResposne);
         iamService.refreshMerchantDetails(urn, userId);
         return new HashMap<>();
     }
@@ -55,6 +56,7 @@ public class MerchantEkycService {
         );
         log.info("PROC RESPONSE FOR SAVING ADDRESS DATA: {}", objectMapper.writeValueAsString(procCallResposne));
 
+        procedureCallUtil.verifyProcedureResponse(urn, procCallResposne);
         iamService.refreshMerchantDetails(urn, userId);
         return new HashMap<>();
     }
@@ -67,12 +69,13 @@ public class MerchantEkycService {
 
         Map<String, Object> procCallResposne = procedureCallUtil.callProc(
                 urn,
-                ProcConstants.SAVE_MERCHANT_ADDRESS_DETAILS,
+                ProcConstants.SAVE_MERCHANT_BUSINESS_DETAILS,
                 Long.parseLong(userId),
                 objectMapper.writeValueAsString(userBusinessDetails)
         );
         log.info("PROC RESPONSE FOR SAVING BUSINESS DATA: {}", objectMapper.writeValueAsString(procCallResposne));
 
+        procedureCallUtil.verifyProcedureResponse(urn, procCallResposne);
         iamService.refreshMerchantDetails(urn, userId);
         return new HashMap<>();
     }

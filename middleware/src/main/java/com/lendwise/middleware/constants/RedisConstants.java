@@ -6,4 +6,5 @@ package com.lendwise.middleware.constants;
     @author biplaw.chaudhary
 */
 public class RedisConstants {
+    public static final String USER_SESSION_DATA = "USER_SESSION_DATA_{USERID}";
 }

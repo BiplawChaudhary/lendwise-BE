@@ -26,7 +26,7 @@ public class IamService {
 
         Map<String, Object> refreshMerchantSessionDataApiResponse = webClientUtil.initiateGetRequest(
                 MERCHANT_SESSION_REFRESH_URL,
-                Map.of(),
+                Map.of("urn", urn, "userId", userId),
                 0, 0, urn
         );
 
