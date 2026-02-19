@@ -20,7 +20,7 @@ public class ApiConstants {
         public static final String AUTHENTICATE_TOKEN = "/authenticateToken";
         public static final String FORGOT_PASSWORD = "/forgotPassword";
         public static final String RESET_ACCOUNT_OF_MERCHANT = "/resetAccountOfMerchant";
-        public static final String DEACTIVATE_MERCHANT = "/deactivateMerchant";
+        public static final String TOGGLE_ACTIVE_STATUS = "/toggleActiveStatus";
     }
 
 
@@ -30,6 +30,10 @@ public class ApiConstants {
         public static final String SAVE_ADDRESS_DETAILS = "/saveAddressDetails";
         public static final String SAVE_BUSINESS_DETAILS = "/saveBusinessDetails";
         public static final String FETCH_USER_KYC_DATA = "/fetchUserKycData";
+
+        public static final String FETCH_ALL_MERCHANT_LIST = "/merchantList";
+        public static final String UPDATE_EKYC_STATUS = "/updateEkycStatus";
+        public static final String GET_USER_INFO = "/getUserInfo";
     }
 
 }

@@ -72,4 +72,15 @@ public class AuthController extends BaseController {
                 "save.success", "Admin");
     }
 
+
+    @GetMapping(ApiConstants.AUTH.TOGGLE_ACTIVE_STATUS)
+    public ResponseEntity<?> toggleActiveStatus(@RequestHeader String urn,
+                                                @RequestHeader String userId) throws JsonProcessingException {
+        return createSuccessResponse(
+                authService.toggleUserActiveStatus(urn, userId),
+                "update.success", "User active status"
+        );
+    }
+
+
 }

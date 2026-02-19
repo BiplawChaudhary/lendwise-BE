@@ -194,8 +194,10 @@ public class AuthService {
             throw new GenericException(urn, "Authentication token required", 401);
         }
 
-        if (!jwtUtil.validateToken(authToken)) {
-            throw new GenericException(urn, "Invalid JWT Token", 401);
+        try{
+            jwtUtil.validateToken(authToken);
+        }catch (Exception e){
+            throw new GenericException(urn,e.getMessage(), 401);
         }
 
         // Extract user role from token
@@ -241,7 +243,7 @@ public class AuthService {
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         Map<String, List<String>> roleUrlMapping = Map.of(
-                "ADMIN", List.of("/lendwisemw/api/v1/admin/**"), // Admin can access both
+                "ADMIN", List.of("/lendwisemw/api/v1/admin/**", "/lendwisemw/api/v1/auth/toggleActiveStatus"), // Admin can access both
                 "MERCHANT", List.of("/lendwisemw/api/v1/merchant/**")
         );
 
@@ -257,7 +259,19 @@ public class AuthService {
     }
 
 
+    public Object toggleUserActiveStatus(String urn, Map<String, Object> requestDto) throws JsonProcessingException {
+        log.info("TOGGELING USER ACTIVE STATUS {}", requestDto);
 
+        Map<String, Object> procResponse = procedureCallUtil
+                .callProc(
+                        urn,
+                        ProcConstants.TOGGLE_USER_ACTIVE_STATUS,
+                        objectMapper.writeValueAsString(requestDto)
+                );
 
+        log.info("TOGGLE USER ACTIVE STATUS PROC RESPONSE: {}", procResponse);
 
+        procedureCallUtil.verifyProcedureResponse(urn, procResponse);
+        return new HashMap<>();
+    }
 }

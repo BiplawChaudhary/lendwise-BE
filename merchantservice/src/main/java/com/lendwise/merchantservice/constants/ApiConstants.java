@@ -14,4 +14,8 @@ public class ApiConstants {
     public static final String SAVE_PERSONAL_DETAILS = "/savePersonalDetails";
     public static final String SAVE_ADDRESS_DETAILS = "/saveAddressDetails";
     public static final String SAVE_BUSINESS_DETAILS = "/saveBusinessDetails";
+
+    public static final String FETCH_ALL_MERCHANT_LIST = "/merchantList";
+    public static final String UPDATE_EKYC_STATUS = "/updateEkycStatus";
+    public static final String GET_MERCHANT_INFO = "/getMerchantInfo";
 }

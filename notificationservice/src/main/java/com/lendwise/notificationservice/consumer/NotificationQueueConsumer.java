@@ -44,7 +44,10 @@ public class NotificationQueueConsumer {
 
             if ("RESET_PASSWORD".equalsIgnoreCase(notificationType)) {
                 processPasswordResetLinkEmail(root);
-            }else{
+            }else if("EKYC_ADMIN_ACTION".equalsIgnoreCase(notificationType)) {
+                processEkycActionNotificationEmail(root);
+            }
+            else{
                 log.warn("Unsupported notification type: {}", notificationType);
             }
 
@@ -57,6 +60,22 @@ public class NotificationQueueConsumer {
             throw new RuntimeException("Notification processing failed", e);
         }
     }
+
+    private void processEkycActionNotificationEmail(Map<String, Object> root) {
+        log.info("Processing EKYC_ADMIN_ACTION notification email");
+        Map<String, Object> data =
+                (Map<String, Object>) root.get("data");
+
+        if (data == null) {
+            log.warn("Missing data object in EKYC_ADMIN_ACTION message");
+            return;
+        }
+
+        emailService.sendEkycActionEmail(data);
+
+        log.info("EKYC_ADMIN_ACTION notification email sent");
+    }
+
 
     private void processPasswordResetLinkEmail(Map<String, Object> root) throws MessagingException {
         Object dataObj = root.get("data");

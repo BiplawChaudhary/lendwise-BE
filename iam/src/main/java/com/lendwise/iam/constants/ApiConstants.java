@@ -15,5 +15,5 @@ public class ApiConstants {
     public static final String FORGOT_PASSWORD = "/forgotPassword";
     public static final String REFRESH_SESSION_DATA = "/refreshSessionData";
     public static final String RESET_ACCOUNT_OF_MERCHANT = "/resetAccountOfMerchant";
-    public static final String DEACTIVATE_MERCHANT = "/deactivateMerchant";
+    public static final String TOGGLE_ACTIVE_STATUS = "/toggleActiveStatus";
 }

@@ -3,6 +3,7 @@ package com.lendwise.middleware.controller.merchant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lendwise.middleware.constants.ApiConstants;
 import com.lendwise.middleware.controller.base.BaseController;
+import com.lendwise.middleware.dto.request.AdminEkycActionRequestDto;
 import com.lendwise.middleware.service.merchant.MerchantEkycService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +74,44 @@ public class MerchantEkycController extends BaseController {
         return createSuccessResponse(
                 merchantEkycService.fetchMerchantEkycDataByStep(urn,type),
                 "fetch.success", "Merchant "+type +" Details"
+        );
+    }
+
+
+
+    @GetMapping(ApiConstants.ADMIN_BASE + ApiConstants.MERCHANT.GET_USER_INFO)
+    public ResponseEntity<?> fetchUserData(
+            @RequestHeader String urn,
+            @RequestHeader String userId
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.fetchUserInfoByUserId(urn,userId),
+                "fetch.success", "Merchant Details"
+        );
+    }
+
+    @PostMapping(ApiConstants.ADMIN_BASE + ApiConstants.MERCHANT.UPDATE_EKYC_STATUS)
+    public ResponseEntity<?> updateMerchantEkycStatus(
+            @RequestHeader String urn,
+            @RequestBody AdminEkycActionRequestDto requestBody
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.updateMerchantEkycStatusAdmin(urn, requestBody),
+                "update.success", "Merchant EKYC Details"
+        );
+    }
+
+    @PostMapping(ApiConstants.ADMIN_BASE + ApiConstants.MERCHANT.FETCH_ALL_MERCHANT_LIST)
+    public ResponseEntity<?> fetchUserList(
+            @RequestHeader String urn,
+            @RequestBody Map<String, Object> requestBody
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.fetchAllMerchantListAdmin(urn, requestBody),
+                "fetch.success", "Merchant List"
         );
     }
 

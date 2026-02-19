@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -42,5 +44,47 @@ public class EmailService {
         helper.setFrom(emailFrom);
 
         mailSender.send(message);
+    }
+
+    public void sendEkycActionEmail(Map<String, Object > data){
+
+        String email = (String) data.get("email");
+        String action = (String) data.get("action");
+
+        Context context = new Context();
+        context.setVariable("action", action);
+
+        if ("REJECTED".equalsIgnoreCase(action)) {
+
+            context.setVariable("rejectionCategory",
+                    data.get("rejectionCategory"));
+
+            context.setVariable("rejectionReason",
+                    data.get("rejectionReason"));
+
+            // handle typo safely
+            context.setVariable("rejectionCount",
+                    data.getOrDefault("rejectionCount",
+                            data.get("rejctionCount")));
+        }
+
+        try {
+            String htmlContent =
+                    templateEngine.process("ekyc-admin-action", context);
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper =
+                    new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject("eKYC Status Update - LendWise");
+            helper.setText(htmlContent, true);
+            helper.setFrom(emailFrom);
+
+            mailSender.send(message);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Email sending failed", e);
+        }
     }
 }

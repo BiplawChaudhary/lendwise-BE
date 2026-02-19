@@ -1,17 +1,20 @@
 package com.lendwise.middleware.service.iam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.lendwise.middleware.constants.SERVICE_URL_CONSTANTS;
 import com.lendwise.middleware.dto.global.GlobalApiResponseDto;
 import com.lendwise.middleware.dto.request.iam.AuthorizationRequestDto;
 import com.lendwise.middleware.dto.request.iam.LoginRequestDto;
 import com.lendwise.middleware.dto.request.iam.UserRegistrationRequestDto;
+import com.lendwise.middleware.utils.UserSessionUtil;
 import com.lendwise.middleware.utils.common.ServiceResponseUtil;
 import com.lendwise.middleware.utils.common.WebClientUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -26,6 +29,7 @@ public class AuthService {
 
     private final Gson gson;
     private final WebClientUtil webClientUtil;
+    private final UserSessionUtil userSessionUtil;
 
     public Object loginMerchant(String urn, LoginRequestDto loginRequestDto) {
         log.info("LOGGING IN MERCHANT: {}", gson.toJson(loginRequestDto));
@@ -101,6 +105,25 @@ public class AuthService {
 
             log.info("CHECK AND VALIDATE TOKEN RESPONSE: {}", gson.toJson(checkAndValidateRequestApiResponse));
             return ServiceResponseUtil.validateAndGetResponseData(urn,  checkAndValidateRequestApiResponse);
+    }
+
+
+    public Object toggleUserActiveStatus(String urn, String userId) throws JsonProcessingException {
+        log.info("TOGGELING USER ACTIVE STATUS {}", userId);
+
+        Map<String, Object> requestDto = new HashMap<>();
+        requestDto.put("userId", userId);
+        requestDto.put("updatedById", userSessionUtil.fetchLoggedInUserId(urn));
+
+        Map<String, Object> checkAndValidateRequestApiResponse = webClientUtil.initiatePostRequest(
+                SERVICE_URL_CONSTANTS.IAM.TOGGLE_ACTIVE_STATUS,
+                Map.of("urn", urn, "userId", userId),
+                requestDto,
+                0, 0, urn
+        );
+
+        log.info("TOGGELING USER ACTIVE STATUS RESPONSE: {}", gson.toJson(checkAndValidateRequestApiResponse));
+        return ServiceResponseUtil.validateAndGetResponseData(urn,  checkAndValidateRequestApiResponse);
     }
 
 

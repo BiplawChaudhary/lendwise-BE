@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /*
     @created 5/9/2025 3:45 PM
@@ -107,6 +108,15 @@ public class AuthController extends BaseController {
         );
     }
 
+
+    @PostMapping(ApiConstants.TOGGLE_ACTIVE_STATUS)
+    public ResponseEntity<?> toggleActiveStatus(@RequestHeader String urn,
+                                                @RequestBody Map<String, Object> requestDto) throws JsonProcessingException {
+        return createSuccessResponse(
+                authService.toggleUserActiveStatus(urn, requestDto),
+                "update.success", "User active status"
+        );
+    }
 
 
 }

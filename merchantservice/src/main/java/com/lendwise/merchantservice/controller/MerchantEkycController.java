@@ -62,4 +62,41 @@ public class MerchantEkycController extends BaseController {
                 "save.success", "Merchant Business Details"
         );
     }
+
+    @PostMapping(ApiConstants.ADMIN_BASE + ApiConstants.FETCH_ALL_MERCHANT_LIST)
+    public ResponseEntity<?> fetchAllMerchantList(
+            @RequestHeader String urn,
+            @RequestBody Map<String, Object> requestBody
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.fetchAllMerchantList(urn, requestBody),
+                "fetch.success", "Merchant List"
+        );
+    }
+
+
+    @PostMapping(ApiConstants.ADMIN_BASE + ApiConstants.UPDATE_EKYC_STATUS)
+    public ResponseEntity<?> updateMerchantEkycStatus(
+            @RequestHeader String urn,
+            @RequestBody Map<String, Object> requestBody
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.adminUpdateMerchantEkycStatus(urn, requestBody),
+                "update.success", "Merchant EKYC Status"
+        );
+    }
+    @GetMapping(ApiConstants.ADMIN_BASE + ApiConstants.GET_MERCHANT_INFO)
+    public ResponseEntity<?> getMerchantInfo(
+            @RequestHeader String urn,
+            @RequestHeader String userId
+    ) throws JsonProcessingException {
+        MDC.put("urn", urn);
+        return createSuccessResponse(
+                merchantEkycService.getUserProfileData(urn, userId),
+                "update.success", "Merchant Info"
+        );
+    }
+
 }

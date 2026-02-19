@@ -3,6 +3,7 @@ package com.lendwise.middleware.service.merchant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.lendwise.middleware.constants.SERVICE_URL_CONSTANTS;
+import com.lendwise.middleware.dto.request.AdminEkycActionRequestDto;
 import com.lendwise.middleware.exceptions.GenericException;
 import com.lendwise.middleware.utils.UserSessionUtil;
 import com.lendwise.middleware.utils.common.ServiceResponseUtil;
@@ -89,5 +90,48 @@ public class MerchantEkycService {
             case "EKYC_STATUS"-> userSessionUtil.fetchUserEkycDetails(urn);
             default -> throw new GenericException(urn, "INVALID status", 401);
         };
+    }
+
+
+    public Object updateMerchantEkycStatusAdmin(String urn, AdminEkycActionRequestDto requestDto) throws JsonProcessingException {
+        log.info("Updating merchant ekyc details {}", gson.toJson(requestDto));
+
+        Map<String, Object> apiResponse = webClientUtil.initiatePostRequest(
+                SERVICE_URL_CONSTANTS.MERCHANT.UPDATE_EKYC_STATUS,
+                Map.of("urn", urn),
+                requestDto,
+                0, 0, urn
+        );
+
+        log.info("UPDATE MERCHANT EKYC DETAILS API RESPONSE: {}", gson.toJson(apiResponse));
+        return ServiceResponseUtil.validateAndGetResponseData(urn,  apiResponse);
+    }
+
+    public Object fetchAllMerchantListAdmin(String urn, Map<String, Object> requestDto) throws JsonProcessingException {
+        log.info("FETCHING ALL MERCHANT LIST {}", gson.toJson(requestDto));
+
+        Map<String, Object> apiResponse = webClientUtil.initiatePostRequest(
+                SERVICE_URL_CONSTANTS.MERCHANT.FETCH_ALL_MERCHANT_LIST,
+                Map.of("urn", urn),
+                requestDto,
+                0, 0, urn
+        );
+
+        log.info("FETCH ALL MERCHANT LIST API RESPONSE: {}", gson.toJson(apiResponse));
+        return ServiceResponseUtil.validateAndGetResponseData(urn,  apiResponse);
+    }
+
+
+    public Object fetchUserInfoByUserId(String urn, String userId) throws JsonProcessingException {
+        log.info("FETCHING USERINFO BY USERID {}", userId);
+
+        Map<String, Object> apiResponse = webClientUtil.initiateGetRequest(
+                SERVICE_URL_CONSTANTS.MERCHANT.GET_MERCHANT_INFO,
+                Map.of("urn", urn, "userId", userId),
+                0, 0, urn
+        );
+
+        log.info("FETCHING USERINFO BY USERID API RESPONSE: {}", gson.toJson(apiResponse));
+        return ServiceResponseUtil.validateAndGetResponseData(urn,  apiResponse);
     }
 }
