@@ -44,6 +44,12 @@ public class CommonRequestFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         try {
             String contentType = request.getContentType();
             String urn = request.getHeader("urn") == null ?

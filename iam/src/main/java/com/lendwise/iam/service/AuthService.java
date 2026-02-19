@@ -229,7 +229,9 @@ public class AuthService {
                 "/lendwisemw/api/v1/auth/login",
                 "/lendwisemw/api/v1/auth/forgotPassword",
                 "/lendwisemw/api/v1/auth/saveMerchant",
-                "/iam/api/v1/authenticateToken");
+                "/iam/api/v1/authenticateToken",
+                "/lendwisemw/api/v1/files/**"
+        );
 
         return publicUrlPatterns.stream()
                 .anyMatch(pattern -> pathMatcher.match(pattern, url));
