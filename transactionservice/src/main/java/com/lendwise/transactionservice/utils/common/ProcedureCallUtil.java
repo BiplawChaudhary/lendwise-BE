@@ -3,6 +3,7 @@ package com.lendwise.transactionservice.utils.common;
 
 import com.google.gson.Gson;
 import com.lendwise.transactionservice.constants.AppConstants;
+import com.lendwise.transactionservice.exceptions.GenericException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@ConditionalOnProperty(name = "jarfusion.postgres", havingValue = "true")
+@ConditionalOnProperty(name = "lendwise.postgres", havingValue = "true")
 public class ProcedureCallUtil {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -60,6 +61,12 @@ public class ProcedureCallUtil {
         queryBuilder.append(AppConstants.CLOSE_SMALL_BRACKET);
         logger.info("[URN_{}] , query fired :{}",urn,queryBuilder.toString());
         return namedParameterJdbcTemplate.queryForList(queryBuilder.toString(), new HashMap<>());
+    }
+
+    public void verifyProcedureResponse(String urn, Map<String, Object> procResponse){
+        if(!procResponse.get("response_code").toString().equals("200")){
+            throw new GenericException(urn,procResponse.get("response_message").toString(), (int) procResponse.get("response_code"));
+        }
     }
 
 }

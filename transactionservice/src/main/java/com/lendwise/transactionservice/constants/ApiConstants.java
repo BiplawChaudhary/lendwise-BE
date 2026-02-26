@@ -6,4 +6,6 @@ package com.lendwise.transactionservice.constants;
     @author biplaw.chaudhary
 */
 public class ApiConstants {
+    public static final String API_VERSION = "/api/v1";
+    public static final String CALCULATE_CREDIT_SCORE = "/calculateCreditScore";
 }

@@ -48,6 +48,18 @@ public class UserSessionUtil {
         return Long.parseLong(userAccountProfileMap.get("user_id").toString());
     }
 
+    public String fetchLoggedInUserEmail(String urn) throws JsonProcessingException {
+        Map<String, Object> userProfileData =  fetchUserSessionData(urn);
+
+        Map<String, Object> userAccountProfileMap = (Map<String, Object>) userProfileData.get("userAccountProfile");
+        return userAccountProfileMap.get("user_email").toString();
+    }
+
+    public String fetchLoggedInUserFonePayId(String urn) throws JsonProcessingException {
+        Map<String, Object> userAccountProfileMap = fetchUserBusinessDetails(urn);
+        return userAccountProfileMap.get("fonepay_id").toString();
+    }
+
 
     public Map<String, Object> fetchUserPersonalDetails(String urn) throws JsonProcessingException {
         Map<String, Object> userProfileData =  fetchUserSessionData(urn);

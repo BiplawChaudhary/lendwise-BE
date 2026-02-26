@@ -36,4 +36,8 @@ public class ApiConstants {
         public static final String GET_USER_INFO = "/getUserInfo";
     }
 
+    public static class TRANSACTION{
+        public static final String CALCULATE_CREDIT_SCORE = "/calculateCreditScore";
+    }
+
 }

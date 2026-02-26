@@ -6,4 +6,5 @@ package com.lendwise.transactionservice.constants;
     @author biplaw.chaudhary
 */
 public class ProcConstants {
+    public static final String SAVE_MERCHANT_CREDIT_SCORE = "loan.save_merchant_credit_score";
 }

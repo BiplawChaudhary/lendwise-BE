@@ -24,4 +24,8 @@ public class SERVICE_URL_CONSTANTS {
         public static final String UPDATE_EKYC_STATUS = "http://localhost:9003/merchant/api/v1/admin/updateEkycStatus";
         public static final String GET_MERCHANT_INFO = "http://localhost:9003/merchant/api/v1/admin/getMerchantInfo";
     }
+
+    public static class TRANSACTION{
+        public static final String CALCULATE_CREDIT_SCORE = "http://localhost:9006/txn/api/v1/calculateCreditScore";
+    }
 }
