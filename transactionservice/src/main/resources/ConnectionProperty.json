@@ -29,7 +29,7 @@
     "dev": {
       "username": "root",
       "password": "RclDev@321",
-      "url": "mongodb://100.67.216.41:27017/test?retryWrites=true&w=majority"
+      "url": "mongodb://root:RclDev%40321@100.67.216.41:27017/{databaseName}?authSource=admin&retryWrites=true&w=majority"
     }
   }
 }

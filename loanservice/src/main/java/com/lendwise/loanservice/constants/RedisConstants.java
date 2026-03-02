@@ -6,4 +6,5 @@ package com.lendwise.loanservice.constants;
     @author biplaw.chaudhary
 */
 public class RedisConstants {
+    public static final String LOAN_WITHDRAWAL_REDIS_KEY = "LOAN_WITHDRAWAL_{WITHDRAWAL_ID}";
 }

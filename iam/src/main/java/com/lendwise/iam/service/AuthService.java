@@ -243,8 +243,15 @@ public class AuthService {
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         Map<String, List<String>> roleUrlMapping = Map.of(
-                "ADMIN", List.of("/lendwisemw/api/v1/admin/**", "/lendwisemw/api/v1/auth/toggleActiveStatus"), // Admin can access both
-                "MERCHANT", List.of("/lendwisemw/api/v1/merchant/**")
+                "ADMIN", List.of("/lendwisemw/api/v1/admin/**", "/lendwisemw/api/v1/auth/toggleActiveStatus",
+                        "/lendwisemw/api/v1/fetchMerchantLoan",
+                        "/lendwisemw/api/v1/fetchInstallmentBreakdown",
+                        "/lendwisemw/api/v1/fetchMerchantLoanOffer"
+                ), // Admin can access both
+                "MERCHANT", List.of("/lendwisemw/api/v1/merchant/**",
+                        "/lendwisemw/api/v1/fetchMerchantLoan",
+                        "/lendwisemw/api/v1/fetchInstallmentBreakdown",
+                        "/lendwisemw/api/v1/fetchMerchantLoanOffer")
         );
 
         List<String> allowedPatterns = roleUrlMapping.get(role.toUpperCase());

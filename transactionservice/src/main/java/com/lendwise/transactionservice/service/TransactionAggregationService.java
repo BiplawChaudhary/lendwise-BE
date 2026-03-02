@@ -38,7 +38,13 @@ public class TransactionAggregationService {
     public Object processMerchantCreditScore(String urn, String userId,String userEmail, String fonePayId){
         log.info("Fetching fonepay transaction details for fonepayId: {} ", fonePayId);
 
-        List<MerchantDatasetGenerator.MerchantDataset> mockTransactionList = MerchantDatasetGenerator.generateDataset(600);
+        List<MerchantDatasetGenerator.Transaction> mockTransactionList = MerchantDatasetGenerator.generateMerchantTransactions(
+                2,      // months
+                50, 89, // txnPerDay range
+                0.88,   // crProb
+                1.0,    // amountMultiplier
+                42L     // seed
+        );
 
         log.info("Fonepay Transaction History Fetched successfully for fonepayId {} ", fonePayId);
 
@@ -50,7 +56,7 @@ public class TransactionAggregationService {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }).start();
 
         return new HashMap<>();
     }

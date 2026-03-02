@@ -28,4 +28,15 @@ public class SERVICE_URL_CONSTANTS {
     public static class TRANSACTION{
         public static final String CALCULATE_CREDIT_SCORE = "http://localhost:9006/txn/api/v1/calculateCreditScore";
     }
+
+
+    public static class LOAN{
+        public static final String FETCH_MERCHANT_DASHBOARD = "http://localhost:9002/loan/api/v1/fetchMerchantDashboard";
+        public static final String FETCH_ADMIN_DASHBOARD = "http://localhost:9002/loan/api/v1/fetchAdminDashboard";
+        public static final String FETCH_INSTALLMENT_BREAKDOWN = "http://localhost:9002/loan/api/v1/fetchInstallmentBreakdown";
+        public static final String FETCH_MERCHANT_LOAN = "http://localhost:9002/loan/api/v1/fetchMerchantLoan";
+        public static final String FETCH_MERCHANT_LOAN_OFFERS = "http://localhost:9002/loan/api/v1/fetchMerchantLoanOffer";
+        public static final String MARK_INSTALLATION_PAID = "http://localhost:9002/loan/api/v1/markInstallationPaid";
+        public static final String PROCESS_LOAN_WITHDRAWAL = "http://localhost:9002/loan/api/v1/processLoanWithdrawal";
+    }
 }

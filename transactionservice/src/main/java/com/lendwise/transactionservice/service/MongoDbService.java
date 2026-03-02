@@ -18,7 +18,7 @@ import java.util.List;
 public class MongoDbService {
     private final MongoTemplate mongoTemplate;
 
-    public void saveMongoTransactionHistoryInMongoDb(Object transactions, String fonePayId){
+    public void saveMongoTransactionHistoryInMongoDb(List<MerchantDatasetGenerator.Transaction> transactions, String fonePayId){
         log.info("SAVING TRANSACTION HISTORY FETCHED FROM PROVIDER INTO MONGO: ");
         String collectionName = "trans_history_" + fonePayId;
         mongoTemplate.insert(transactions, collectionName);
